@@ -12,9 +12,8 @@ Vagrant::Config.run do |config|
 
   # Boot with a GUI so you can see the screen. (Default is headless)
   #config.vm.boot_mode = :gui
-  #config.ssh.max_tries = 1
+  
 
-  #config.vm.provision :shell, :inline => "/etc/init.d/networking restart"
 
   
   # Assign this VM to a host only network IP, allowing you to access it
@@ -23,7 +22,7 @@ Vagrant::Config.run do |config|
 
   # Forward a port from the guest to the host, which allows for outside
   # computers to access the VM, whereas host only networking does not.
-  config.vm.forward_port "http", 80, 8080
+  #config.vm.forward_port "http", 80, 8080
 
   # Share an additional folder to the guest VM. The first argument is
   # an identifier, the second is the path on the guest to mount the
@@ -48,10 +47,10 @@ Vagrant::Config.run do |config|
   # #               Managed by Puppet.\n"
   # # }
   #
-  config.vm.provision :puppet do |puppet|
-     puppet.manifests_path = "puppet"
-     puppet.manifest_file  = "manifest.pp"
-  end
+  #config.vm.provision :puppet do |puppet|
+  #   puppet.manifests_path = "puppet"
+  #   puppet.manifest_file  = "manifest.pp"
+  #end
 
   # Enable provisioning with chef solo, specifying a cookbooks path (relative
   # to this Vagrantfile), and adding some recipes and/or roles.

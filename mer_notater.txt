@@ -1,0 +1,141 @@
+Schedule:
+  - intro + disclaimer
+  Rubyist og *nix-sentrisk. Det kommer til å gå fort. Jeg er glad i kommandolinja. 
+  Jeg så sånn ut når jeg satt på kjøkkenet i går og snekra slider. 
+  Spør underveis eller snakk med meg etterpå.
+  
+  - dette er ikke noe kurs, men en samling kule ting man kan gjøre.
+  - hva er devops
+  
+  Cloud. ec2, rackspace, linode, heroku.
+    - koster penger. amazon free tier
+    
+  Lokal "Cloud"
+    - vagrant
+    - virtualbox.
+    - automatiser opprettelse av virtuelle maskiner lokalt.
+    
+    
+    - automatisering av virtuelle maskiner.
+    - genialt til lokale utviklingsmiljø
+    - bytt mellom forskjellige oppsett
+    - alle avhengigheter pakket i samme pakke.
+    - bygd på virtualbox, og rake. open source.
+
+    - basis-boks.
+    - håndterer ssh-keys og alt. nice.
+
+  Demo:
+    - vagrant init i blank mappe
+    - cd inn i miniseminar.
+    - vagrant up
+    - vagrant ssh
+    - vise /vagrant-mappe
+    - endre til :gui og reboote.
+    - vise virtualbox-gui
+    
+  Fog:
+    - to-tre slider.
+    - ruby-dsl for cloud-providee.
+    - programmatisk igangsnurring av servere på ec2, rackspace, linode etc.
+    
+  Demo.
+    - 'gem install fog'
+    - vise ~/.fog
+    connection = Compute[:aws]
+    server = connection.servers.bootstrap(:private_key_path => '~/.ssh/id_rsa', :public_key_path => '~/.ssh/id_rsa.pub', :username => 'ubuntu')
+    
+    dra opp amazon.com/aws og vise at serveren går opp.
+    Også vise hvor man finner secret-keys.
+    
+    server.ssh("whoami") <- returnerer array.
+    server.ssh(["whoami", "pwd"])
+    
+    server.ssh("echo 'hei ntnu' > fil.txt")
+    server.ssh("cat fil.txt")
+    
+    server.public_ip_address
+    
+    ut av fog, ssh ubuntu@ip-en.
+    
+    vise at alt er satt opp smootherino.
+    
+    
+Men blanke servere. hei hå.
+
+
+
+Infrastruktur som kode:
+  - Deklarativ konfigurasjon av infrastruktur. Sjekkes inn i kildekoden. Kjøres på testmiljø og prodmiljø. 
+  - Puppet
+  - Chef
+  Hipp som happ, vise puppet, mer konsis kode.
+  
+  Eksempel-manifest.
+  class lucid32 {
+    package { "apache2":
+      ensure => present,
+    }
+
+    service { "apache2":
+      ensure => running,
+      require => Package["apache2"],
+    }
+    
+    file {"indexfile":
+           path    => "/var/www/index.html",
+           ensure  => present,
+           content => "Hei verden",
+           require => Package["apache2"],
+     }
+  }
+
+  include lucid32
+
+- idempotent, kan kjøres flere ganger med samme resultat
+- templating med erb
+- veldig fleksibelt.
+- til en viss grad platform/distro-agnostisk.
+- samme serveren hver gang.
+- kjøre samme script mot test og prod.
+- klient-server 
+
+
+Men vent, hva med vagrant-boksen vi skal bruke som lokalt utviklingsmiljø?
+
+Men vent. hva med puppet-
+- lag kjapt manifest 
+- endre vagrantfile (provisioner og port-forward)
+  -vagrant reload
+  vips: http://localhost:8080
+    
+    Endre teksten i "indexfile"
+    vagrant reload.
+    
+    
+Hey. nice.
+
+ssh inn til ec2-server
+vi manifest.pp
+
+paste inn manifest.
+
+puppet apply
+
+
+Thor son of Odin
+    
+
+    
+    
+Til heim.gitub.com/miniseminar
+Linker til: 
+- slides
+- histfiless
+-vagrantup.com
+-amazon.com/aws
+-fog.io
+-generering av public/private-keys
+-puppetlabs.com
+    
+    

@@ -1,29 +1,7 @@
-Sliderino.
-
-Vagrant 0.8 - VBox 4.1 exlusiv
-
-
-fog
-
-connection = Compute[:aws]
-server = connection.server.bootstrap
-
-server.ssh("whoami")
-server.ssh("sudo apt-get update -y -q")
-server.ssh("sudo apt-get install -y -q apache2")
-server.ssh("sudo rm /var/www/index.html")
-server.ssh("sudo chown ubuntu:ubuntu /var/www")
-server.ssh("echo 'hello NTNU' > /var/www/index.html")
 
 
 
 
-
-
-
-deb http://backports.debian.org/debian-backports lenny-backports main contrib non-free
-aptitude update
-aptitude show puppet
 
 
 
@@ -37,9 +15,10 @@ DevOps (Developer-Operations)
 - Infrastruktur som kode.
 - Like miljøer
 
+
 Disclaimer
 
-Rubyist og *nix-sentrisk. Det kommer til å gå fort. Snakk med meg etterpå.
+Rubyist og *nix-sentrisk. Det kommer til å gå fort. Jeg er glad i kommandolinja. Jeg så sånn ut når jeg satt på kjøkkenet i går og snekra slider. Spør underveis eller snakk med meg etterpå.
 
 Snakke mer om cloud og infrastruktur som kode, like miljøer.
 
@@ -50,29 +29,9 @@ Amazon, en hel bråte med cloudtjenester. MEst kjent ec2 og s3
  Linode
  Heroku (kjører på ec2)
  
- Infrastruktur som kode:
-  - Puppet
-  - Chef
-  Hipp som happ, vise puppet, mer konsis kode.
-  
-  Eksempel-manifest.
-  class lucid32 {
-    package { "apache2":
-      ensure => present,
-    }
-
-    service { "apache2":
-      ensure => running,
-      require => Package["apache2"],
-    }
-  }
-
-  include lucid32
-
-- idempotent, kan kjøres flere ganger.
-
-
-Vagrant.
+ Vagrant.
+ 
+ 
 - automatisering av virtuelle maskiner.
 - genialt til lokale utviklingsmiljø
 - bytt mellom forskjellige oppsett
@@ -87,6 +46,31 @@ Kjapp demo:
   - vagrant up
   - vagrant ssh
 blank maskin
+
+Infrastruktur som kode:
+  - Deklarativ konfigurasjon av infrastruktur. Sjekkes inn i kildekoden. Kjøres på testmiljø og prodmiljø. 
+  - Puppet
+  - Chef
+  Hipp som happ, vise puppet, mer konsis kode.
+  
+  Eksempel-manifest.
+  class webserver {
+    package { "apache2":
+      ensure => present,
+    }
+
+    service { "apache2":
+      ensure => running,
+      require => Package["apache2"],
+    }
+  }
+
+  include webserver
+
+- idempotent, kan kjøres flere ganger.
+
+
+
 Men vent. hva med puppet-
 - lag kjapt manifest (eller kopier)
 - endre vagrantfile (provisioner og port-forward)
@@ -97,14 +81,35 @@ Men vent. hva med puppet-
 Fog -taakeheimen
  - abstraksjon over forskjellige cloudleverandører.
  - fog.io
+ - ruby-bibliotek
+ 
+ 'gem install fog'
+ 
+ $ fog
+ 
+ server.ssh("whoami")
+ 
+ 
+
+ connection = Compute[:aws]
+
+ server = c.servers.bootstrap(:private_key_path => '~/.ssh/id_rsa', :public_key_path => '~/.ssh/id_rsa.pub', :username => 'ubuntu')
+ server.ssh("sudo apt-get update -y -q")
+ server.ssh("sudo apt-get install -y -q apache2")
+ server.ssh("sudo rm /var/www/index.html")
+ server.ssh("sudo chown ubuntu:ubuntu /var/www")
+ server.ssh("echo 'hello NTNU' > /var/www/index.html")
+
+ 
  
  connection = Compute[:aws]
- server = c.servers.bootstrap(:private_key_path => '~/.ssh/id_rsa', :public_key_path => '~/.ssh/id_rsa.pub', :username => 'ubuntu')
+ 
  
  
 Automate it
   thor.
   lite bibliotek for å lage raske kommandolinje utils
+  
  
  
  

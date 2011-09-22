@@ -12,7 +12,7 @@ class lucid32 {
   file {"indexfile":
         path    => "/var/www/index.html",
         ensure  => present,
-        content => "Halleiihe NTNU",
+        content => "Hei NTNU",
         require => Package["apache2"],
   }
   
