@@ -71,9 +71,7 @@ Schedule:
     vise at alt er satt opp smootherino.
     
     
-Men blanke servere. hei hå.
-
-
+Men blanke servere. hei nei.
 
 Infrastruktur som kode:
   - Deklarativ konfigurasjon av infrastruktur. Sjekkes inn i kildekoden. Kjøres på testmiljø og prodmiljø. 
